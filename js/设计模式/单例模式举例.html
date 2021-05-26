@@ -1,0 +1,50 @@
+<!--
+ * @Author: Brightness
+ * @Date: 2021-05-26 11:10:18
+ * @LastEditors: Brightness
+ * @LastEditTime: 2021-05-26 11:47:50
+ * @Description:  单例模式
+-->
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>单例模式</title>
+</head>
+<body>
+    <button id="modal-btn">弹窗</button>
+</body>
+<script>
+    
+/**
+ * 使用场景:全局只有一个弹窗,数据库连接等。
+ * 只有一个实例。
+ */
+
+/*********** 保证一个类只有一个实例，并提供一个访问它的全局访问点，
+ * 实现的方法为先判断实例存在与否，如果存在则直接返回实例，如果不存则创建实例并返回实例。 *************/
+    let instance = null;//存储单例
+
+    function createSingleLayer(fn){
+        
+        return instance || (instance = fn.apply(this,arguments))
+        
+    }
+
+    function createModel(){
+        let div = document.createElement('div');
+        div.innerHTML = `我是弹窗`;
+        div.className = 'modal';
+        div.style.display = 'none';
+        document.body.appendChild(div);
+        return div;
+    }
+
+    document.getElementById('modal-btn').addEventListener('click',()=>{
+        let  modelLayer = createSingleLayer(createModel);
+        modelLayer.style.display = 'block';
+    })
+</script>
+</html>
